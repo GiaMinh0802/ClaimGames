@@ -12,7 +12,7 @@ api_id = '28222709'
 api_hash = 'cbe0badef0a05463b386cac35dbfb4e9'
 client = TelegramClient('anon', api_id, api_hash)
 
-@client.on(events.NewMessage(chats=['doclenh92lottery', 'doclenhvn168', 'vngolenh3phut', 'sukienvessovn', 'testgame0802']))
+@client.on(events.NewMessage(chats=['doclenh92lottery', 'doclenhvn168', 'vngolenh3phut', 'sukienvessovn']))
 async def my_event_handler(event):
     msg = str(event.raw_text)
     text = msg.split("\n")
@@ -26,8 +26,6 @@ async def my_event_handler(event):
                 os.system('cls')
             else:
                 os.system('clear')
-            if (sender_name == 'testgame0802'):
-                vn168Redpage(mess)
             if (sender_name == 'doclenhvn168'):
                 vn168Redpage(mess)
             if (sender_name == 'doclenh92lottery'):

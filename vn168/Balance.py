@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import json
 
-json_path = "game/vn168/key.json"
+json_path = "vn168/key.json"
 
 def GetBanlance(random, sign, token):
     # Yêu cầu OPTIONS
