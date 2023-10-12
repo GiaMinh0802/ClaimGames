@@ -5,7 +5,6 @@ import re
 import threading
 import subprocess
 import jwt
-from vn168.Token import Token
 
 input_file = "vn168/signature.txt"
 json_path = "vn168/key.json"
@@ -65,6 +64,7 @@ def RunCode(rand, sign, number, giftcode, data):
     print(number + ":" + response['msg'])
 
 def vn168Redpage(giftcode):
+    from vn168.Token import Token
     with open(json_path, 'r') as file:
         data = json.load(file)
 
@@ -107,6 +107,7 @@ def vn168Redpage(giftcode):
         thread.join()
 
 def main():
+    from Token import Token
     print("------VN168------")
     giftcode = input("Mã lì xì: ")
 
