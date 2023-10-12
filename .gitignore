@@ -2,5 +2,9 @@ anon.session
 anon.session-journal
 lottery/__pycache__/
 vesovn/__pycache__/
+vesovn/key.json
+vesovn/signature.txt
 vn82/__pycache__/
 vn168/__pycache__/
+vn168/key.json
+vn168/signature.txt
