@@ -25,7 +25,7 @@ def RunCode(number, item, giftcode):
     except Exception as e:
         print(number + ":" + str(e))
         
-def lotteryRedpage(giftcode):
+def clubRedpage(giftcode):
     with open(file_path, 'r') as file:
         data = json.load(file)
         
