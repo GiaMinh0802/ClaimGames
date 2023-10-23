@@ -25,14 +25,19 @@ async def my_event_handler(event):
         if (len(mess) == 32) and (" " not in mess):
             await client.send_message('claimgame0802', sender_name + ": " + mess)
             if (sender_name == 'doclenhvn168' or sender_name == 'sukien168vn'):
+                print('----------VN168----------')
                 vn168Redpage(mess)
             if (sender_name == 'doclenh92lottery' or sender_name == 'Sukien92Lottery'):
+                print('----------92LOTTERY----------')
                 lotteryRedpage(mess)
             if (sender_name == 'sukienvessovn'):
+                print('----------VESOVN----------')
                 vesovnRedpage(mess)
             if (sender_name == 'vngolenh3phut'):
+                print('----------82VN----------')
                 vn82Redpage(mess)
             if (sender_name == 'kiemtien66clubvip'):
+                print('----------66CLUB----------')
                 clubRedpage(mess)
 
 client.start()
