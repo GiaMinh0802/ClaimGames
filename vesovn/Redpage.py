@@ -145,6 +145,8 @@ def vesovnRedpage(giftcode):
             print(e)
         response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
+        if response['msg'] != 'Exchange successful':
+            break
 
 def main():
     print("------VESOVN------")
@@ -190,6 +192,8 @@ def main():
             print(e)
         response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
+        if response['msg'] != 'Exchange successful':
+            break
 
 if __name__ == "__main__":
     main()
