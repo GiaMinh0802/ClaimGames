@@ -14,7 +14,7 @@ api_id = '28222709'
 api_hash = 'cbe0badef0a05463b386cac35dbfb4e9'
 client = TelegramClient('anon', api_id, api_hash)
 
-@client.on(events.NewMessage(chats=['doclenh92lottery', 'Sukien92Lottery', 'doclenhvn168', 'sukien168vn', 'vngolenh3phut', 'sukienvessovn', 'kiemtien66clubvipro']))
+@client.on(events.NewMessage(chats=['doclenh92lottery', 'Sukien92Lottery', 'doclenhvn168', 'sukien168vn', 'vngolenh3phut', 'sukienvessovn', -1001749468867]))
 async def my_event_handler(event):
     msg = str(event.raw_text)
     text = msg.split("\n")
@@ -23,7 +23,12 @@ async def my_event_handler(event):
     for mess in text:
         mess = mess.rstrip()
         if (len(mess) == 32) and (" " not in mess):
-            await client.send_message('claimgame0802', sender_name + ": " + mess)
+            if (sender_name is None):
+                print('----------66CLUB----------')
+                clubRedpage(mess)
+                await client.send_message('claimgame0802', "66club: " + mess)
+            else:
+                await client.send_message('claimgame0802', sender_name + ": " + mess)
             if (sender_name == 'doclenhvn168' or sender_name == 'sukien168vn'):
                 print('----------VN168----------')
                 vn168Redpage(mess)
@@ -36,9 +41,6 @@ async def my_event_handler(event):
             if (sender_name == 'vngolenh3phut'):
                 print('----------82VN----------')
                 vn82Redpage(mess)
-            if (sender_name == 'kiemtien66clubvipro'):
-                print('----------66CLUB----------')
-                clubRedpage(mess)
 
 client.start()
 client.run_until_disconnected()
