@@ -65,6 +65,15 @@ def RunCode(rand, sign, number, giftcode, data):
 
 def vn168Redpage(giftcode):
     from vn168.Token import Token
+
+    with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
+
     with open(json_path, 'r') as file:
         data = json.load(file)
 
@@ -92,6 +101,14 @@ def vn168Redpage(giftcode):
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     threads = []
+
+    with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
 
     with open(json_path, 'r') as file:
         data = json.load(file)
@@ -112,6 +129,14 @@ def main():
     giftcode = input("Mã lì xì: ")
 
     with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
+
+    with open(json_path, 'r') as file:
         data = json.load(file)
 
     token = data["1"]['token']
@@ -138,6 +163,14 @@ def main():
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     threads = []
+
+    with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
 
     with open(json_path, 'r') as file:
         data = json.load(file)
