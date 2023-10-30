@@ -22,7 +22,7 @@ async def my_event_handler(event):
     sender_name = sender.username
     for mess in text:
         mess = mess.rstrip()
-        if (len(mess) == 32 or len(mess) == 25) and (" " not in mess):
+        if (len(mess) == 32 or len(mess) == 25) and (" " not in mess) and ("/" not in mess):
             if (sender_name is None):
                 print('----------66CLUB----------')
                 clubRedpage(mess)
