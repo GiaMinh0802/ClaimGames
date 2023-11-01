@@ -93,7 +93,7 @@ def main():
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
-        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign))
+        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path))
         threads.append(thread)
 
     for thread in threads:
