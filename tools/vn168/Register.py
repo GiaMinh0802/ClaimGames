@@ -1,9 +1,12 @@
-from pythonmonkey import require as js_require
+import execjs
 from datetime import datetime
 import requests
 import sys
 
-js_lib = js_require('./main')
+with open("main.js", "r") as file:
+    js_code = file.read()
+
+js_lib = execjs.compile(js_code)
 
 invitecode = "2238699785"
 phone = sys.argv[1]
@@ -22,7 +25,7 @@ pre_payload = {
     "username": "84" + phone
 }
 
-result = js_lib.getSignature(pre_payload)
+result = js_lib.call("getSignature", pre_payload)
 
 def GetMyIp():
     response = requests.get('https://httpbin.org/ip')
@@ -48,13 +51,16 @@ def Register(random, sign, phone):
     }
     requests.options(options_url, headers=options_headers)
 
+    ip = GetMyIp()
+    print(ip)
+
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/Register"
     post_headers = {
         "Accept": "application/json, text/plain, */*",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "en",
-        "Ar-Real-Ip": GetMyIp(),
+        "Ar-Real-Ip": ip,
         "Authorization": "",
         "Content-Length": "315",
         "Content-Type": "application/problem+json; charset=UTF-8",
