@@ -46,7 +46,7 @@ def GetToken(phone, random, sign):
     post_data = {
         "language": 2,
         "logintype": "mobile",
-        "phonetype": 0,
+        "phonetype": -1,
         "pwd": "GiaMinh123",
         "random": random,
         "signature": sign,
