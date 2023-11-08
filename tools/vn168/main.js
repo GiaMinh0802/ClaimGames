@@ -49,4 +49,44 @@ function getSignature(payload) {
     return [payload.signature, payload.random]
 }
 
-module.exports = { Redpage, getSignature }
+function Token(phone) {
+    let data = {
+        language: "",
+        random: ""
+    }
+    data.language = 0
+    data.logintype = "mobile"
+    data.phonetype = 0
+    data.pwd = "GiaMinh123"
+    data.random = yt()
+    data.username = "84" + phone
+
+    const i = JSON.parse(JSON.stringify(data))
+        , c = Object.keys(i);
+    c.sort()
+    const m = {}
+        , p = ["signature", "track", "xosoBettingData"];
+    c.forEach(h=>{
+        i[h] !== null && i[h] !== "" && !p.includes(h) && (m[h] = i[h] === 0 ? 0 : i[h])
+    })
+    data.signature = St(JSON.stringify(m))
+    data.timestamp = Math.floor(Date.now() / 1e3)
+
+    return data
+}
+
+function listToken() {
+    const fs = require('fs');
+
+    fs.readFile('data/tk.txt', 'utf8', (err, data) => {
+    const lines = data.split('\n');
+    for (const line of lines) {
+        const content = JSON.stringify(Token(line.replace("\r", "")));
+        console.log(content)
+    }
+    });
+}
+
+module.exports = { Redpage, getSignature, listToken }
+
+listToken()
