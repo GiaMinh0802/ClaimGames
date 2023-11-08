@@ -54,9 +54,9 @@ function Token(phone) {
         language: "",
         random: ""
     }
-    data.language = 0
+    data.language = 2
     data.logintype = "mobile"
-    data.phonetype = 0
+    data.phonetype = -1
     data.pwd = "GiaMinh123"
     data.random = yt()
     data.username = "84" + phone
