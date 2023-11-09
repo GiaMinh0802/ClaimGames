@@ -1,5 +1,4 @@
-import sys
-import pyperclip
+import openpyxl
 
 with open('data/lottery.txt', 'r') as f:
     lotterys = f.readlines()
@@ -77,18 +76,22 @@ sound,1,,,,,
 vars,1,,,,,
 voice,0,1,,,,"""
 
-i = int(sys.argv[1])
+workbook = openpyxl.load_workbook('data/autofill.xlsx')
+sheet = workbook.active
 
-formatted_text = text.format(
-    lottery=lotterys[i-1].strip(),
-    vn168=vn168s[i-1].strip(),
-    vn82=vn82s[i-1].strip(),
-    vesovn=vesovns[i-1].strip(),
-    club66=club66s[i-1].strip(),
-    pilot79=pilot79s[i-1].strip(),
-    winmax=winmaxs[i-1].strip(),
-    vip88=vip88s[i-1].strip(),
-    may68=may68s[i-1].strip()
-)
+for i in range(1, 201):
+    cell = 'B' + str(i+1)
+    formatted_text = text.format(
+        lottery=lotterys[i-1].strip(),
+        vn168=vn168s[i-1].strip(),
+        vn82=vn82s[i-1].strip(),
+        vesovn=vesovns[i-1].strip(),
+        club66=club66s[i-1].strip(),
+        pilot79=pilot79s[i-1].strip(),
+        winmax=winmaxs[i-1].strip(),
+        vip88=vip88s[i-1].strip(),
+        may68=may68s[i-1].strip()
+    )
+    sheet[cell] = formatted_text
 
-pyperclip.copy(formatted_text)
+workbook.save('data/autofill.xlsx')
