@@ -17,7 +17,10 @@ async def my_event_handler(event):
     msg = str(event.raw_text)
     text = msg.split("\n")
     sender = await event.get_sender()
-    sender_name = sender.username
+    try:
+        sender_name = sender.username
+    except:
+        pass
     for mess in text:
         mess = mess.rstrip()
         if (len(mess) == 32 or len(mess) == 25) and (" " not in mess) and ("/" not in mess):
