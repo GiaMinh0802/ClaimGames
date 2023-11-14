@@ -16,8 +16,8 @@ client = TelegramClient('anon', api_id, api_hash)
 async def my_event_handler(event):
     msg = str(event.raw_text)
     text = msg.split("\n")
-    sender = await event.get_sender()
     try:
+        sender = await event.get_sender()
         sender_name = sender.username
     except:
         pass
