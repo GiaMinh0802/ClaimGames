@@ -36,6 +36,28 @@ def GetMyIp():
         data = response.json()
         return data['origin']
 
+def ResetDcom(nameDcom):
+    commands = 'netsh interface set interface "' + nameDcom + '" disable'
+    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
+    time.sleep(1)
+    commands = 'netsh interface set interface "' + nameDcom + '" enable'
+    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
+    ip = ""
+    i = 0
+    while ip == "":
+        if (i == 5):
+            commands = 'netsh interface set interface "' + nameDcom + '" disable'
+            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
+            time.sleep(1)
+            commands = 'netsh interface set interface "' + nameDcom + '" enable'
+            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
+            i = 0
+        try:
+            ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
+            i = i + 1
+        except:
+            pass
+
 def Register(random, sign, phone):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/Register"
@@ -53,7 +75,9 @@ def Register(random, sign, phone):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
     requests.options(options_url, headers=options_headers)
-
+    
+    ResetDcom("Cellular 2")
+    
     ip = GetMyIp()
     print(ip)
 
