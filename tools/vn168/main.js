@@ -86,7 +86,3 @@ function listToken() {
     }
     });
 }
-
-module.exports = { Redpage, getSignature, listToken }
-
-listToken()
