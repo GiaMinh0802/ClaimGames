@@ -3,6 +3,8 @@ from datetime import datetime
 import requests
 import sys
 import random
+import win32com.shell.shell as shell
+import time
 
 with open("main.js", "r") as file:
     js_code = file.read()
@@ -76,8 +78,6 @@ def Register(random, sign, phone):
     }
     requests.options(options_url, headers=options_headers)
     
-    ResetDcom("Cellular 2")
-    
     ip = GetMyIp()
     print(ip)
 
@@ -123,4 +123,5 @@ def Register(random, sign, phone):
 
     return post_response
 
+ResetDcom("Cellular 2")
 print(Register(result[1], result[0], phone))
