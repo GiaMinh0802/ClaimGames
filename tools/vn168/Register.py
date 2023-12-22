@@ -123,5 +123,5 @@ def Register(random, sign, phone):
 
     return post_response
 
-ResetDcom("Cellular 2")
+ResetDcom("Cellular 7")
 print(Register(result[1], result[0], phone))
