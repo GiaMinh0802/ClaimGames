@@ -5,6 +5,8 @@ from vesovn.Redpage import vesovnRedpage
 from vn168.Redpage import vn168Redpage
 from club66.Redpage import clubRedpage
 
+listReceived = []
+
 print('Started')
 
 api_id = '28222709'
@@ -23,7 +25,9 @@ async def my_event_handler(event):
     chat_name = await get_chat_name(chat_id)
     for mess in text:
         mess = mess.rstrip()
-        if (len(mess) == 32 or len(mess) == 25) and (" " not in mess) and ("/" not in mess):
+        if (len(mess) == 32 or len(mess) == 25) and (" " not in mess) and ("/" not in mess) and (mess not in listReceived):
+
+            listReceived.append(mess)
             
             if (chat_id in [-1001172657538, -1001842592179, -1001886568136]):
                 print('----------92LOTTERY----------')
