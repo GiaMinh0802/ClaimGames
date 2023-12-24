@@ -47,9 +47,9 @@ async def my_event_handler(event):
             #     print('----------82VN----------')
             #     vn82Redpage(mess)
 
-            # if (chat_id in [-1001634428201, -1001749468867]):
-            #     print('----------66CLUB----------')
-            #     clubRedpage(mess)
+            if (chat_id in [-1001634428201, -1001749468867]):
+                print('----------66CLUB----------')
+                clubRedpage(mess)
 
             await client.send_message('claimgame0802', chat_name + ": " + mess)
 
