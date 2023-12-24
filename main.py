@@ -4,6 +4,7 @@ from vn82.Redpage import vn82Redpage
 from vesovn.Redpage import vesovnRedpage
 from vn168.Redpage import vn168Redpage
 from club66.Redpage import clubRedpage
+import time
 
 listReceived = []
 
@@ -42,6 +43,7 @@ async def my_event_handler(event):
                 vesovnRedpage(mess)
 
             if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365]):
+                time.sleep(5)
                 print('----------82VN----------')
                 vn82Redpage(mess)
 
