@@ -42,14 +42,14 @@ async def my_event_handler(event):
                 print('----------VESOVN----------')
                 vesovnRedpage(mess)
 
-            if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365]):
-                time.sleep(5)
-                print('----------82VN----------')
-                vn82Redpage(mess)
+            # if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365]):
+            #     time.sleep(5)
+            #     print('----------82VN----------')
+            #     vn82Redpage(mess)
 
-            if (chat_id in [-1001634428201, -1001749468867]):
-                print('----------66CLUB----------')
-                clubRedpage(mess)
+            # if (chat_id in [-1001634428201, -1001749468867]):
+            #     print('----------66CLUB----------')
+            #     clubRedpage(mess)
 
             await client.send_message('claimgame0802', chat_name + ": " + mess)
 
