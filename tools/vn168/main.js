@@ -86,3 +86,5 @@ function listToken() {
     }
     });
 }
+
+listToken()
