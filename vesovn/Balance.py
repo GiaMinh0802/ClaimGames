@@ -3,8 +3,11 @@ from datetime import datetime
 import json
 
 json_path = "vesovn/key.json"
+proxy_path = "proxy.txt"
+with open(proxy_path, 'r') as file:
+    proxies = file.readlines()
 
-def GetBanlance(random, sign, token):
+def GetBanlance(random, sign, token, proxy):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/GetUserInfo"
     options_headers = {
@@ -20,7 +23,7 @@ def GetBanlance(random, sign, token):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/GetUserInfo"
@@ -47,7 +50,7 @@ def GetBanlance(random, sign, token):
         "timestamp": int(datetime.now().timestamp()) 
     }
 
-    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy).json()
 
     amount = None
 
@@ -62,12 +65,17 @@ with open(json_path, 'r') as file:
     data = json.load(file)
 
 for number in data:
+    rawProxy = proxies[int(number)-1].strip()
+    proxy = {
+        'http': 'http://' + rawProxy,
+        'https': 'http://' + rawProxy,
+    }
 
     token = data[number]['token']
 
     balance_random = data[number]['balance']['random']
     balance_sign = data[number]['balance']['sign']
 
-    balance = GetBanlance(balance_random, balance_sign, token)
+    balance = GetBanlance(balance_random, balance_sign, token, proxy)
 
     print(balance)
