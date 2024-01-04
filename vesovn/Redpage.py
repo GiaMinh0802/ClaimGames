@@ -139,7 +139,7 @@ def vesovnRedpage(giftcode):
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy)
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
@@ -190,7 +190,7 @@ def main():
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy)
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
