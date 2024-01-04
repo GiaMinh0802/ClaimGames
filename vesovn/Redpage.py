@@ -8,11 +8,8 @@ import jwt
 phone_path = "vesovn/tk.txt"
 input_file = "vesovn/signature.txt"
 json_path = "vesovn/key.json"
-proxy_path = "proxy.txt"
-with open(proxy_path, 'r') as file:
-    proxies = file.readlines()
 
-def GetToken(phone, random, sign, proxy):
+def GetToken(phone, random, sign):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/Login"
     options_headers = {
@@ -28,7 +25,7 @@ def GetToken(phone, random, sign, proxy):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers, proxies=proxy)
+    requests.options(options_url, headers=options_headers)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/Login"
@@ -54,11 +51,11 @@ def GetToken(phone, random, sign, proxy):
         "signature": sign,
         "timestamp": int(datetime.now().timestamp()) 
     }
-    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
 
     return post_response['data']['token']
 
-def GetRedpage(giftcode, random, sign, token, proxy):
+def GetRedpage(giftcode, random, sign, token):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/ConversionRedpage"
     options_headers = {
@@ -74,7 +71,7 @@ def GetRedpage(giftcode, random, sign, token, proxy):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers, proxies=proxy)
+    requests.options(options_url, headers=options_headers)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/ConversionRedpage"
@@ -103,7 +100,7 @@ def GetRedpage(giftcode, random, sign, token, proxy):
         "timestamp": int(datetime.now().timestamp()) 
     }
 
-    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
 
     return post_response
 
@@ -127,19 +124,15 @@ def vesovnRedpage(giftcode):
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
-    for phone, rand, sign, number, rawProxy in zip(phones, random_values, signature_values, data, proxies):
+    for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
         token = data[number]['token']
-        proxy = {
-            'http': 'http://' + rawProxy.strip(),
-            'https': 'http://' + rawProxy.strip(),
-        }
         try:
             decoded_token = jwt.decode(token, verify=False)
             expiration_time = datetime.fromtimestamp(int(decoded_token['exp']))
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy)
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
@@ -150,7 +143,7 @@ def vesovnRedpage(giftcode):
                     continue
         except Exception as e:
             print(e)
-        response = GetRedpage(giftcode, rand, sign, token, proxy)
+        response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
         if response['msg'] != 'Exchange successful':
             break
@@ -178,19 +171,15 @@ def main():
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
-    for phone, rand, sign, number, rawProxy in zip(phones, random_values, signature_values, data, proxies):
+    for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
         token = data[number]['token']
-        proxy = {
-            'http': 'http://' + rawProxy.strip(),
-            'https': 'http://' + rawProxy.strip(),
-        }
         try:
             decoded_token = jwt.decode(token, verify=False)
             expiration_time = datetime.fromtimestamp(int(decoded_token['exp']))
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy)
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
@@ -201,7 +190,7 @@ def main():
                     continue
         except Exception as e:
             print(e)
-        response = GetRedpage(giftcode, rand, sign, token, proxy)
+        response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
         if response['msg'] != 'Exchange successful':
             break

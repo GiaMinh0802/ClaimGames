@@ -9,11 +9,7 @@ import jwt
 input_file = "vn168/signature.txt"
 json_path = "vn168/key.json"
 
-proxy_path = "proxy.txt"
-with open(proxy_path, 'r') as file:
-    proxies = file.readlines()
-
-def GetRedpage(giftcode, random, sign, token, proxy):
+def GetRedpage(giftcode, random, sign, token):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/ConversionRedpage"
     options_headers = {
@@ -29,7 +25,7 @@ def GetRedpage(giftcode, random, sign, token, proxy):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers, proxies=proxy)
+    requests.options(options_url, headers=options_headers)
 
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/ConversionRedpage"
@@ -58,13 +54,13 @@ def GetRedpage(giftcode, random, sign, token, proxy):
         "timestamp": int(datetime.now().timestamp()) 
     }
 
-    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
 
     return post_response
 
-def RunCode(rand, sign, number, giftcode, data, proxy):
+def RunCode(rand, sign, number, giftcode, data):
     token = data[number]['token']
-    response = GetRedpage(giftcode, rand, sign, token, proxy)
+    response = GetRedpage(giftcode, rand, sign, token)
     print(number + ":" + response['msg'])
 
 def vn168Redpage(giftcode):
@@ -117,12 +113,8 @@ def vn168Redpage(giftcode):
     with open(json_path, 'r') as file:
         data = json.load(file)
 
-    for rand, sign, number, rawProxy in zip(random_values, signature_values, data, proxies):
-        proxy = {
-            'http': 'http://' + rawProxy.strip(),
-            'https': 'http://' + rawProxy.strip(),
-        }
-        thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data, proxy))
+    for rand, sign, number in zip(random_values, signature_values, data):
+        thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data))
         threads.append(thread)
 
     for thread in threads:
@@ -183,12 +175,8 @@ def main():
     with open(json_path, 'r') as file:
         data = json.load(file)
 
-    for rand, sign, number, rawProxy in zip(random_values, signature_values, data, proxies):
-        proxy = {
-            'http': 'http://' + rawProxy.strip(),
-            'https': 'http://' + rawProxy.strip(),
-        }
-        thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data, proxy))
+    for rand, sign, number in zip(random_values, signature_values, data):
+        thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data))
         threads.append(thread)
 
     for thread in threads:
