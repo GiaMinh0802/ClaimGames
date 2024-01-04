@@ -6,7 +6,7 @@ json_path = "vn168/key.json"
 with open(json_path, 'r') as file:
     data = json.load(file)
     
-def GetBanlance(random, sign, token, proxy):
+def GetBanlance(random, sign, token):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/GetUserInfo"
     options_headers = {
