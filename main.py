@@ -43,7 +43,7 @@ async def my_event_handler(event):
                 vesovnRedpage(mess)
 
             # if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365]):
-            #     time.sleep(5)
+            #     time.sleep(3)
             #     print('----------82VN----------')
             #     vn82Redpage(mess)
 

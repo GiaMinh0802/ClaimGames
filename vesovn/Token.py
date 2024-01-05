@@ -72,8 +72,6 @@ def Token():
     threads = []
 
     for number in data:
-        # listBan = [8,9,10,19,30,34,43,55,65,69,82,86,96,127,143,161,183]
-        # if (int(number) not in listBan):
         phone = phones[int(number)-1].strip()
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']

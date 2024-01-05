@@ -3,7 +3,9 @@ from datetime import datetime
 import json
 
 json_path = "vn168/key.json"
-
+with open(json_path, 'r') as file:
+    data = json.load(file)
+    
 def GetBanlance(random, sign, token):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/GetUserInfo"
@@ -57,9 +59,6 @@ def GetBanlance(random, sign, token):
         amount = None
 
     return amount
-
-with open(json_path, 'r') as file:
-    data = json.load(file)
 
 for number in data:
 

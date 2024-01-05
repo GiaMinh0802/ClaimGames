@@ -36,6 +36,7 @@ function Redpage(giftCode) {
 }
 
 function getSignature(payload) {
+    payload.random = yt()
     const i = JSON.parse(JSON.stringify(payload))
         , c = Object.keys(i);
     c.sort()
@@ -45,8 +46,7 @@ function getSignature(payload) {
         i[h] !== null && i[h] !== "" && !p.includes(h) && (m[h] = i[h] === 0 ? 0 : i[h])
     })
     payload.signature = St(JSON.stringify(m))
-    payload.timestamp = Math.floor(Date.now() / 1e3)
-    return payload
+    return [payload.signature, payload.random]
 }
 
 function Token(phone) {
