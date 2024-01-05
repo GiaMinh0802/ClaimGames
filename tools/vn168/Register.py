@@ -83,24 +83,6 @@ def Register(random, sign, phone):
 
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/Register"
-    post_headers = {
-        "Accept": "application/json, text/plain, */*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "en",
-        "Ar-Real-Ip": ip,
-        "Authorization": "",
-        "Content-Length": "315",
-        "Content-Type": "application/problem+json; charset=UTF-8",
-        "Origin": "https://vn168-1.com",
-        "Referer": "https://vn168-1.com/",
-        "Sec-Ch-Ua": '"Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"',
-        "Sec-Ch-Ua-mobile": "?0",
-        "Sec-Ch-Ua-platform": "Windows",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "cross-site",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-    }
 
     post_data = {
         "captchaId": "",
@@ -119,9 +101,9 @@ def Register(random, sign, phone):
         "username": "84" + phone
     }
 
-    post_response = requests.post(post_url, headers=post_headers, json=post_data)
+    post_response = requests.post(post_url, json=post_data).json()
 
     return post_response
 
 ResetDcom("Cellular 7")
-print(Register(result[1], result[0], phone))
+print(Register(result[1], result[0], phone)['msg'])

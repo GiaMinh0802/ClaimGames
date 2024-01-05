@@ -1,21 +1,17 @@
 import requests
 
-file_path = "data/tk.txt"
+param = {
+    "username" : "0396600487",
+    'pwd' : "GiaMinh123",
+    'regtype': '1',
+    'phonetype': "0",
+    'language': 'vi'
+}
 
-with open(file_path, 'r') as file:
-    phones = file.readlines()
-
-i = 1
-
-for phone in phones:
-    param = {
-        "username" : "+84" + phone.strip(),
-        'pwd' : "GiaMinh123",
-        'phonetype': "0",
-        'language': 'vi'
-    }
-
-    response = requests.post('https://66clubapiapi.com/api/webapi/UserLogin', data=param)
-    response = response.json()
-    print(str(i) + ": " + response['msg'])
-    i = i + 1
+response = requests.post('https://66clubapiapi.com/api/webapi/UserLogin', data=param)
+response = response.json()
+try:
+    print(response['data']['Sign'])
+    print(response['data']['UserId'])
+except:
+    print(response)

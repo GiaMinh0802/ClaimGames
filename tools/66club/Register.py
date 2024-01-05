@@ -48,14 +48,5 @@ response = response.json()
 
 if (response['success'] is True):
     print(response['data']['UserId'])
-    print(response['data']['Sign'])
-    with open('data/uid.txt', 'a') as file:
-        file.write(response['data']['UserId'] + '\n')
-
-    with open('data/sign.txt', 'a') as file:
-        file.write(response['data']['Sign'] + '\n')
-
-    with open('data/tk.txt', 'a') as file:
-        file.write(phone + '\n')
 else:
     print(response)
