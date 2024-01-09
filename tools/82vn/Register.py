@@ -47,6 +47,9 @@ response = requests.post('https://82vn82vnapi.com/api/webapi/Register', data=par
 response = response.json()
 
 if (response['success'] is True):
-    print(response['data']['UserId']) 
+    with open('data/uid.txt', 'a') as uid_file:
+        uid_file.write(str(response['data']['UserId']) + '\n')
+    with open('data/sign.txt', 'a') as sign_file:
+        sign_file.write(str(response['data']['Sign']) + '\n')
 else:
     print(response)
