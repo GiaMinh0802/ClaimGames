@@ -5,26 +5,25 @@ import win32com.shell.shell as shell
 import time
 
 def ResetDcom(nameDcom):
-    commands = 'netsh interface set interface "' + nameDcom + '" disable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    time.sleep(1)
-    commands = 'netsh interface set interface "' + nameDcom + '" enable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    ip = ""
-    i = 0
-    while ip == "":
-        if (i == 5):
-            commands = 'netsh interface set interface "' + nameDcom + '" disable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            time.sleep(1)
-            commands = 'netsh interface set interface "' + nameDcom + '" enable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            i = 0
-        try:
-            ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
-            i = i + 1
-        except:
-            pass
+    max_attempts = 5
+    attempts = 0
+    while attempts < max_attempts:
+        commands_disable = f'netsh interface set interface "{nameDcom}" disable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_disable)
+        time.sleep(1)
+        commands_enable = f'netsh interface set interface "{nameDcom}" enable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_enable)
+        ip = ""
+        while ip == "":
+            try:
+                ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
+            except:
+                pass
+        if ip != "":
+            break
+        attempts += 1
+    if attempts == max_attempts:
+        ResetDcom(nameDcom)
 
 listInvite = ['276923', '565590']
 inviteCode = random.choice(listInvite)
@@ -41,7 +40,7 @@ param = {
     "language": "vi"
 }
 
-ResetDcom("Cellular 7")
+# ResetDcom("")
 
 response = requests.post('https://66clubapiapi.com/api/webapi/Register', data=param)
 response = response.json()

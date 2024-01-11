@@ -1,37 +1,37 @@
 import requests
 import sys
 import random
+import requests
 import win32com.shell.shell as shell
 import time
 
 def ResetDcom(nameDcom):
-    commands = 'netsh interface set interface "' + nameDcom + '" disable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    time.sleep(1)
-    commands = 'netsh interface set interface "' + nameDcom + '" enable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    ip = ""
-    i = 0
-    while ip == "":
-        if (i == 5):
-            commands = 'netsh interface set interface "' + nameDcom + '" disable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            time.sleep(1)
-            commands = 'netsh interface set interface "' + nameDcom + '" enable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            i = 0
-        try:
-            ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
-            i = i + 1
-        except:
-            pass
+    max_attempts = 5
+    attempts = 0
+    while attempts < max_attempts:
+        commands_disable = f'netsh interface set interface "{nameDcom}" disable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_disable)
+        time.sleep(1)
+        commands_enable = f'netsh interface set interface "{nameDcom}" enable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_enable)
+        ip = ""
+        while ip == "":
+            try:
+                ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
+            except:
+                pass
+        if ip != "":
+            break
+        attempts += 1
+    if attempts == max_attempts:
+        ResetDcom(nameDcom)
 
 listInvite = ['Qtckx364592', 'Mcv7n462062','996427','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
 inviteCode = random.choice(listInvite)
 phone = sys.argv[1]
 
 param = {
-    "username": phone,
+    "username": "+84" + phone,
     "smsvcode": "",
     "pwd": "GiaMinh123",
     "regtype": "",
@@ -40,7 +40,8 @@ param = {
     "phonetype": "0",
     "language": "vi"
 }
-ResetDcom("Cellular 7")
+
+ResetDcom("Mobile 2")
 
 response = requests.post('https://92lotteryapi.com/api/webapi/Register', data=param)
 response = response.json()

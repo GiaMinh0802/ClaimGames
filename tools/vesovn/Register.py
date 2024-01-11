@@ -6,6 +6,27 @@ import random
 import win32com.shell.shell as shell
 import time
 
+def ResetDcom(nameDcom):
+    max_attempts = 5
+    attempts = 0
+    while attempts < max_attempts:
+        commands_disable = f'netsh interface set interface "{nameDcom}" disable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_disable)
+        time.sleep(1)
+        commands_enable = f'netsh interface set interface "{nameDcom}" enable'
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_enable)
+        ip = ""
+        while ip == "":
+            try:
+                ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
+            except:
+                pass
+        if ip != "":
+            break
+        attempts += 1
+    if attempts == max_attempts:
+        ResetDcom(nameDcom)
+
 with open("main.js", "r") as file:
     js_code = file.read()
 
@@ -32,34 +53,6 @@ pre_payload = {
 
 result = js_lib.call("getSignature", pre_payload)
 
-def GetMyIp():
-    response = requests.get('https://httpbin.org/ip')
-    if response.status_code == 200:
-        data = response.json()
-        return data['origin']
-
-def ResetDcom(nameDcom):
-    commands = 'netsh interface set interface "' + nameDcom + '" disable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    time.sleep(1)
-    commands = 'netsh interface set interface "' + nameDcom + '" enable'
-    shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-    ip = ""
-    i = 0
-    while ip == "":
-        if (i == 5):
-            commands = 'netsh interface set interface "' + nameDcom + '" disable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            time.sleep(1)
-            commands = 'netsh interface set interface "' + nameDcom + '" enable'
-            shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
-            i = 0
-        try:
-            ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
-            i = i + 1
-        except:
-            pass
-
 def Register(random, sign, phone):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/Register"
@@ -77,9 +70,6 @@ def Register(random, sign, phone):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
     requests.options(options_url, headers=options_headers)
-    
-    ip = GetMyIp()
-    print(ip)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/Register"
@@ -105,5 +95,5 @@ def Register(random, sign, phone):
 
     return post_response
 
-ResetDcom("Mobile 2")
+# ResetDcom("")
 print(Register(result[1], result[0], phone)['msg'])
