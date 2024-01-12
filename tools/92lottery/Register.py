@@ -3,7 +3,7 @@ import sys
 import random
 from requests.auth import HTTPProxyAuth
 
-listInvite = ['Qtckx364592', 'Mcv7n462062','996427','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
+listInvite = ['Qtckx364592', 'Mcv7n462062','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
 inviteCode = random.choice(listInvite)
 phone = sys.argv[1]
 
