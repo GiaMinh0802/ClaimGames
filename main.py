@@ -30,9 +30,9 @@ async def my_event_handler(event):
 
             listReceived.append(mess)
             
-            # if (chat_id in [-1001172657538, -1001842592179, -1001886568136]):
-            #     print('----------92LOTTERY----------')
-            #     lotteryRedpage(mess)
+            if (chat_id in [-1001172657538, -1001842592179, -1001886568136]):
+                print('----------92LOTTERY----------')
+                lotteryRedpage(mess)
             
             if (chat_id in [-1001887175434, -1001958370435, -1001966552444]):
                 print('----------VN168----------')

@@ -3,29 +3,23 @@ from datetime import datetime
 import requests
 import sys
 import random
-import win32com.shell.shell as shell
-import time
+from requests.auth import HTTPProxyAuth
 
-def ResetDcom(nameDcom):
-    max_attempts = 5
-    attempts = 0
-    while attempts < max_attempts:
-        commands_disable = f'netsh interface set interface "{nameDcom}" disable'
-        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_disable)
-        time.sleep(1)
-        commands_enable = f'netsh interface set interface "{nameDcom}" enable'
-        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands_enable)
-        ip = ""
-        while ip == "":
-            try:
-                ip = requests.get('https://api.ipify.org/?format=json').json()["ip"]
-            except:
-                pass
-        if ip != "":
-            break
-        attempts += 1
-    if attempts == max_attempts:
-        ResetDcom(nameDcom)
+with open('../proxy.txt', 'r') as file:
+    listProxy = file.readlines()
+
+proxyRaw = random.choice(listProxy).strip().split(":")
+
+ip = proxyRaw[0]
+port = proxyRaw[1]
+user = proxyRaw[2]
+pwd = proxyRaw[3]
+
+proxy = {
+   'http': 'http://' + ip + ":" + port,
+   'https': 'http://' + ip + ":" + port
+}
+auth = HTTPProxyAuth(user, pwd)
 
 with open("main.js", "r") as file:
     js_code = file.read()
@@ -69,7 +63,7 @@ def Register(random, sign, phone):
         "Sec-Fetch-Site": "cross-site",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
 
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/Register"
@@ -91,9 +85,10 @@ def Register(random, sign, phone):
         "username": "84" + phone
     }
 
-    post_response = requests.post(post_url, json=post_data).json()
+    post_response = requests.post(post_url, json=post_data, proxies=proxy, auth=auth).json()
 
     return post_response
 
-# ResetDcom("")
-print(Register(result[1], result[0], phone)['msg'])
+response = Register(result[1], result[0], phone)['msg']
+if (response != "Succeed"):
+    print(response)

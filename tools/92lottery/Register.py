@@ -1,6 +1,7 @@
 import requests
 import sys
 import random
+from requests.auth import HTTPProxyAuth
 
 listInvite = ['Qtckx364592', 'Mcv7n462062','996427','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
 inviteCode = random.choice(listInvite)
@@ -17,7 +18,23 @@ param = {
     "language": "vi"
 }
 
-response = requests.post('https://92lotteryapi.com/api/webapi/Register', data=param)
+with open('../proxy.txt', 'r') as file:
+    listProxy = file.readlines()
+
+proxyRaw = random.choice(listProxy).strip().split(":")
+
+ip = proxyRaw[0]
+port = proxyRaw[1]
+user = proxyRaw[2]
+pwd = proxyRaw[3]
+
+proxy = {
+   'http': 'http://' + ip + ":" + port,
+   'https': 'http://' + ip + ":" + port
+}
+auth = HTTPProxyAuth(user, pwd)
+
+response = requests.post('https://92lotteryapi.com/api/webapi/Register', data=param, proxies=proxy, auth=auth)
 response = response.json()
 
 if (response['success'] is True):
