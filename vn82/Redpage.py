@@ -31,8 +31,9 @@ def vn82Redpage(giftcode):
     threads = []
 
     for number, item in data.items():
-        thread = threading.Thread(target=RunCode, args=(number, item, giftcode))
-        threads.append(thread)
+        if (int(number) <= 100):
+            thread = threading.Thread(target=RunCode, args=(number, item, giftcode))
+            threads.append(thread)
 
     for thread in threads:
         thread.start()
@@ -50,8 +51,9 @@ def main():
     threads = []
 
     for number, item in data.items():
-        thread = threading.Thread(target=RunCode, args=(number, item, giftcode))
-        threads.append(thread)
+        if (int(number) <= 100):
+            thread = threading.Thread(target=RunCode, args=(number, item, giftcode))
+            threads.append(thread)
 
     for thread in threads:
         thread.start()
