@@ -6,12 +6,16 @@ with open('data/uid.txt', 'r') as f:
 with open('data/sign.txt', 'r') as f:
     signs = f.readlines()
 
+with open('data/number.txt', 'r') as f:
+    numbers = f.readlines()
+
 with open('data/key.json', 'r') as f:
     data = json.load(f)
 
-for uid, sign, number in zip(uids, signs, data):
+for uid, sign, number in zip(uids, signs, numbers):
     uid = int(uid.strip())
     sign = sign.strip()
+    number = number.strip()
     data[number]['uid'] = uid
     data[number]['sign'] = sign
 
