@@ -125,7 +125,7 @@ def vesovnRedpage(giftcode):
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        if (int(number) in [21,92,107,120,122,169,189]):
+        if (int(number) in [21,169]):
             continue
         else:
             token = data[number]['token']
