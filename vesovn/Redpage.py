@@ -125,31 +125,31 @@ def vesovnRedpage(giftcode):
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        if (int(number) in [21,169]):
-            continue
-        else:
-            token = data[number]['token']
-            try:
-                decoded_token = jwt.decode(token, verify=False)
-                expiration_time = datetime.fromtimestamp(int(decoded_token['exp']))
-                current_time = datetime.now()
-                if current_time > expiration_time:
-                    try:
-                        token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
-                        data[number]['token'] = token
-    
-                        formatted_json = json.dumps(data, indent=4, sort_keys=False)
-                        with open(json_path, 'w') as file:
-                            file.write(formatted_json)
-                    except Exception as e:
-                        print(number + ":" + str(e))
-                        continue
-            except Exception as e:
-                print(e)
-            response = GetRedpage(giftcode, rand, sign, token)
-            print(number + ":" + response['msg'])
-            if response['msg'] != 'Exchange successful':
-                break
+        # if (int(number) in [21,169]):
+        #     continue
+        # else:
+        token = data[number]['token']
+        try:
+            decoded_token = jwt.decode(token, verify=False)
+            expiration_time = datetime.fromtimestamp(int(decoded_token['exp']))
+            current_time = datetime.now()
+            if current_time > expiration_time:
+                try:
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
+                    data[number]['token'] = token
+
+                    formatted_json = json.dumps(data, indent=4, sort_keys=False)
+                    with open(json_path, 'w') as file:
+                        file.write(formatted_json)
+                except Exception as e:
+                    print(number + ":" + str(e))
+                    continue
+        except Exception as e:
+            print(e)
+        response = GetRedpage(giftcode, rand, sign, token)
+        print(number + ":" + response['msg'])
+        if response['msg'] != 'Exchange successful':
+            break
 
 def main():
     print("------VESOVN------")
