@@ -44,7 +44,7 @@ async def my_event_handler(event):
 
             if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365, -1001918719770]):
                 if (chat_id == -1001822029296):
-                    time.sleep(3)
+                    time.sleep(5)
                 print('----------82VN----------')
                 vn82Redpage(mess)
 
