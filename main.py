@@ -1,9 +1,9 @@
 from telethon import TelegramClient, events
 from lottery.Redpage import lotteryRedpage
-from vn82.Redpage import vn82Redpage
+# from vn82.Redpage import vn82Redpage
 from vesovn.Redpage import vesovnRedpage
 from vn168.Redpage import vn168Redpage
-from club66.Redpage import clubRedpage
+# from club66.Redpage import clubRedpage
 import time
 
 listReceived = []
@@ -42,11 +42,9 @@ async def my_event_handler(event):
                 print('----------VESOVN----------')
                 vesovnRedpage(mess)
 
-            if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365, -1001918719770]):
-                # if (chat_id == -1001822029296):
-                time.sleep(5)
-                print('----------82VN----------')
-                vn82Redpage(mess)
+            # if (chat_id in [-1001935258958, -1001808293140, -1001761532313, -1001822029296, -1002116803365, -1001918719770]):
+            #     print('----------82VN----------')
+            #     vn82Redpage(mess)
 
             # if (chat_id in [-1001634428201, -1001749468867]):
             #     print('----------66CLUB----------')
