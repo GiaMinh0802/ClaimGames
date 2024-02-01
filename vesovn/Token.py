@@ -2,7 +2,6 @@ import requests
 from datetime import datetime
 import threading
 import json
-from requests.auth import HTTPProxyAuth
 
 phone_path = "vesovn/tk.txt"
 with open(phone_path, 'r') as file:
@@ -12,10 +11,7 @@ json_path = "vesovn/key.json"
 with open(json_path, 'r') as file:
     data = json.load(file)
 
-with open('proxy.txt', 'r') as file:
-    listProxy = file.readlines()
-
-def GetToken(phone, random, sign, proxy, auth):
+def GetToken(phone, random, sign):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/Login"
     options_headers = {
@@ -31,7 +27,7 @@ def GetToken(phone, random, sign, proxy, auth):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
+    requests.options(options_url, headers=options_headers)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/Login"
@@ -57,13 +53,13 @@ def GetToken(phone, random, sign, proxy, auth):
         "signature": sign,
         "timestamp": int(datetime.now().timestamp()) 
     }
-    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy, auth=auth).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
 
     return post_response['data']['token']
 
-def RunCode(number, phone, login_random, login_sign, data, json_path, proxy, auth):
+def RunCode(number, phone, login_random, login_sign, data, json_path):
     try:
-        token = GetToken(phone, login_random, login_sign, proxy, auth)
+        token = GetToken(phone, login_random, login_sign)
         data[number]['token'] = token
 
         formatted_json = json.dumps(data, indent=4, sort_keys=False)
@@ -75,23 +71,12 @@ def RunCode(number, phone, login_random, login_sign, data, json_path, proxy, aut
 def Token():
     threads = []
 
-    for number, proxyRaw in zip(data, listProxy):
+    for number in data:
         phone = phones[int(number)-1].strip()
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
-        proxyRaw = proxyRaw.strip().split(":")
-        ip = proxyRaw[0]
-        port = proxyRaw[1]
-        user = proxyRaw[2]
-        pwd = proxyRaw[3]
-        proxy = {
-            'http': 'http://' + ip + ":" + port,
-            'https': 'http://' + ip + ":" + port
-        }
-        auth = HTTPProxyAuth(user, pwd)
-
-        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path, proxy, auth))
+        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path))
         threads.append(thread)
 
     for thread in threads:
@@ -103,23 +88,12 @@ def Token():
 def main():
     threads = []
 
-    for number, proxyRaw in zip(data, listProxy):
+    for number in data:
         phone = phones[int(number)-1].strip()
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
-        proxyRaw = proxyRaw.strip().split(":")
-        ip = proxyRaw[0]
-        port = proxyRaw[1]
-        user = proxyRaw[2]
-        pwd = proxyRaw[3]
-        proxy = {
-            'http': 'http://' + ip + ":" + port,
-            'https': 'http://' + ip + ":" + port
-        }
-        auth = HTTPProxyAuth(user, pwd)
-
-        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path, proxy, auth))
+        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path))
         threads.append(thread)
 
     for thread in threads:
