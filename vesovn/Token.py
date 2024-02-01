@@ -61,7 +61,7 @@ def GetToken(phone, random, sign, proxy, auth):
 
     return post_response['data']['token']
 
-def RunCode(number, phone, login_random, login_sign, proxy, auth):
+def RunCode(number, phone, login_random, login_sign, data, json_path, proxy, auth):
     try:
         token = GetToken(phone, login_random, login_sign, proxy, auth)
         data[number]['token'] = token
@@ -91,7 +91,7 @@ def Token():
         }
         auth = HTTPProxyAuth(user, pwd)
 
-        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, proxy, auth))
+        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path, proxy, auth))
         threads.append(thread)
 
     for thread in threads:
@@ -119,7 +119,7 @@ def main():
         }
         auth = HTTPProxyAuth(user, pwd)
 
-        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, proxy, auth))
+        thread = threading.Thread(target=RunCode, args=(number, phone, login_random, login_sign, data, json_path, proxy, auth))
         threads.append(thread)
 
     for thread in threads:
