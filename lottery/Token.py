@@ -31,7 +31,7 @@ def GetToken(phone, random, sign, proxy, auth):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
 
     # Yêu cầu POST
     post_url = "https://92lotteryapi.com//api/webapi/Login"
@@ -57,7 +57,7 @@ def GetToken(phone, random, sign, proxy, auth):
         "timestamp": int(datetime.now().timestamp()),
         "username": "84" + phone
     }
-    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data, auth=auth).json()
 
     return post_response['data']['token']
 
@@ -80,6 +80,7 @@ def Token():
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
+        proxyRaw = proxyRaw.strip().split(":")
         ip = proxyRaw[0]
         port = proxyRaw[1]
         user = proxyRaw[2]
@@ -107,6 +108,7 @@ def main():
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
+        proxyRaw = proxyRaw.strip().split(":")
         ip = proxyRaw[0]
         port = proxyRaw[1]
         user = proxyRaw[2]

@@ -80,6 +80,7 @@ def Token():
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
+        proxyRaw = proxyRaw.strip().split(":")
         ip = proxyRaw[0]
         port = proxyRaw[1]
         user = proxyRaw[2]
@@ -107,6 +108,7 @@ def main():
         login_random = data[number]['login']['random']
         login_sign = data[number]['login']['sign']
 
+        proxyRaw = proxyRaw.strip().split(":")
         ip = proxyRaw[0]
         port = proxyRaw[1]
         user = proxyRaw[2]

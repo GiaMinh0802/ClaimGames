@@ -4,12 +4,13 @@ import json
 import re
 import subprocess
 import jwt
+from requests.auth import HTTPProxyAuth
 
 phone_path = "vesovn/tk.txt"
 input_file = "vesovn/signature.txt"
 json_path = "vesovn/key.json"
 
-def GetToken(phone, random, sign):
+def GetToken(phone, random, sign, proxy, auth):
     # Yêu cầu OPTIONS
     options_url = "https://api.ngrbet.com/api/webapi/Login"
     options_headers = {
@@ -25,7 +26,7 @@ def GetToken(phone, random, sign):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
 
     # Yêu cầu POST
     post_url = "https://api.ngrbet.com/api/webapi/Login"
@@ -51,7 +52,7 @@ def GetToken(phone, random, sign):
         "signature": sign,
         "timestamp": int(datetime.now().timestamp()) 
     }
-    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy, auth=auth).json()
 
     return post_response['data']['token']
 
@@ -111,6 +112,9 @@ def vesovnRedpage(giftcode):
     with open(json_path, 'r') as file:
         data = json.load(file)
 
+    with open('proxy.txt', 'r') as file:
+        listProxy = file.readlines()
+
     result = subprocess.run(["node", 'vesovn/main.js', giftcode], capture_output=True, text=True, check=True)
 
     output = result.stdout.strip()
@@ -124,10 +128,7 @@ def vesovnRedpage(giftcode):
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
-    for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        # if (int(number) in [21,169]):
-        #     continue
-        # else:
+    for phone, rand, sign, number, proxyRaw in zip(phones, random_values, signature_values, data, listProxy):
         token = data[number]['token']
         try:
             decoded_token = jwt.decode(token, verify=False)
@@ -135,7 +136,17 @@ def vesovnRedpage(giftcode):
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
+                    proxyRaw = proxyRaw.strip().split(":")
+                    ip = proxyRaw[0]
+                    port = proxyRaw[1]
+                    user = proxyRaw[2]
+                    pwd = proxyRaw[3]
+                    proxy = {
+                        'http': 'http://' + ip + ":" + port,
+                        'https': 'http://' + ip + ":" + port
+                    }
+                    auth = HTTPProxyAuth(user, pwd)
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy, auth)
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
@@ -161,6 +172,9 @@ def main():
     with open(json_path, 'r') as file:
         data = json.load(file)
 
+    with open('proxy.txt', 'r') as file:
+        listProxy = file.readlines()
+
     result = subprocess.run(["node", 'vesovn/main.js', giftcode], capture_output=True, text=True, check=True)
 
     output = result.stdout.strip()
@@ -174,10 +188,7 @@ def main():
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
-    for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        # if (int(number) in []):
-        #     continue
-        # else:
+    for phone, rand, sign, number, proxyRaw in zip(phones, random_values, signature_values, data, listProxy):
         token = data[number]['token']
         try:
             decoded_token = jwt.decode(token, verify=False)
@@ -185,7 +196,17 @@ def main():
             current_time = datetime.now()
             if current_time > expiration_time:
                 try:
-                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'])
+                    proxyRaw = proxyRaw.strip().split(":")
+                    ip = proxyRaw[0]
+                    port = proxyRaw[1]
+                    user = proxyRaw[2]
+                    pwd = proxyRaw[3]
+                    proxy = {
+                        'http': 'http://' + ip + ":" + port,
+                        'https': 'http://' + ip + ":" + port
+                    }
+                    auth = HTTPProxyAuth(user, pwd)
+                    token = GetToken(phone.strip(), data[number]['login']['random'], data[number]['login']['sign'], proxy, auth)
                     data[number]['token'] = token
 
                     formatted_json = json.dumps(data, indent=4, sort_keys=False)
