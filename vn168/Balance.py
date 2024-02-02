@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import json
 
-json_path = "vn168/key.json"
+json_path = "club66/key.json"
 with open(json_path, 'r') as file:
     data = json.load(file)
     

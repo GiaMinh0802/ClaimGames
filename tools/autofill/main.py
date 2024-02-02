@@ -12,8 +12,8 @@ with open('data/vn82.txt', 'r') as f:
 with open('data/vesovn.txt', 'r') as f:
     vesovns = f.readlines()
 
-# with open('data/club66.txt', 'r') as f:
-#     club66s = f.readlines()
+with open('data/club66.txt', 'r') as f:
+    club66s = f.readlines()
 
 # with open('data/pilot79.txt', 'r') as f:
 #     pilot79s = f.readlines()
@@ -31,16 +31,21 @@ text = """### AUTOFILL PROFILES ###,,,,,,
 Profile ID,Name,Site,Hotkey,,,
 ### AUTOFILL RULES ###,,,,,,
 Rule ID,Type,Name,Value,Site,Mode,Profile
-r1,0,"^Điện thoại$","{lottery}","92lottery.com/",1,
-r2,0,"^Mật khẩu$","GiaMinh123","92lottery.com/",1,
-r3,0,"^userNumber$","{vn168}","vn168-1.com/",1,
-r4,0,".passwordInput__container-input > \[type=""text""\]","GiaMinh123","vn168-1.com/",1,
-r5,1,"\[type=""password""\]","GiaMinh123","vn168-1.com/",1,
-r6,0,"^userNumber$","{vesovn}","vesovn.cc/",1,
-r7,0,".passwordInput__container-input > \[type=""text""\]","GiaMinh123","vesovn.cc/",1,
-r8,1,"\[type=""password""\]","GiaMinh123","vesovn.cc/",1,
-r9,0,"^Tên đăng nhập hoặc SĐT$","{vn82}","82vn.com/",1,
-r10,1,"^Mật khẩu$","GiaMinh123","82vn.com/",1,
+r24,0,"^userNumber$","{lottery}","92lottery.com/",1,
+r11,1,"\[data-v-c16e655a\] > div > input\[data-v-b0ac9d23\]","GiaMinh123","92lottery.com/",1,
+r12,1,"\[data-v-93816af6\] > div > input\[data-v-b0ac9d23\]","GiaMinh123","92lottery.com/",1,
+r13,0,"^userNumber$","{vn168}","vn168-1.com/",1,
+r14,1,"\[data-v-ba1985c0\] > div > input\[data-v-2c10910c\]","GiaMinh123","vn168-1.com/",1,
+r15,1,"\[data-v-b5d6270a\] > div > input\[data-v-2c10910c\]","GiaMinh123","vn168-1.com/",1,
+r25,0,"^userNumber$","{vesovn}","vesovn.cc/",1,
+r16,1,"\[data-v-a761d0b2\] > div > input\[data-v-934f92c4\]","GiaMinh123","vesovn.cc/",1,
+r17,1,"\[data-v-584ff9a2\] > div > input\[data-v-934f92c4\]","GiaMinh123","vesovn.cc/",1,
+r19,0,"^userEmail$","{vn82}","82vn.com/",1,
+r18,1,"\[data-v-b677e826\] > div > input\[data-v-34ec8998\]","GiaMinh123","82vn.com/",1,
+r20,1,"\[data-v-c0d4b9dc\] > div > input\[data-v-34ec8998\]","GiaMinh123","82vn.com/",1,
+r22,0,"^userEmail$","{club66}","66club.com/",1,
+r21,1,"\[data-v-ce756f6e\] > div > input\[data-v-3059f33c\]","GiaMinh123","66club.com/",1,
+r23,1,"\[data-v-ebe6b156\] > div > input\[data-v-3059f33c\]","GiaMinh123","66club.com/",1,
 ### AUTOFILL OPTIONS ###,,,,,,
 advanced,"[]",,,,,
 exceptions,"[]",,,,,
@@ -77,7 +82,7 @@ for i in range(1, 201):
         vn168=vn168s[i-1].strip(),
         vn82=vn82s[i-1].strip(),
         vesovn=vesovns[i-1].strip(),
-        # club66=club66s[i-1].strip(),
+        club66=club66s[i-1].strip(),
         # pilot79=pilot79s[i-1].strip(),
         # winmax=winmaxs[i-1].strip(),
         # vip88=vip88s[i-1].strip(),
