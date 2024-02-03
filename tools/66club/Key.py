@@ -1,29 +1,22 @@
 import json
-import requests
+import re
 
-with open("data/tk.txt", 'r') as file:
-    phones = file.readlines()
+phone_path = "data/tk.txt"
+json_path = "data/key.json"
+input_file = "data/signature.txt"
 
-with open('data/key.json', 'r') as f:
-    data = json.load(f)
+with open(input_file, "r") as file:
+    auth = file.read()
 
-for phone, number in zip(phones, data):
-    param = {
-            "username" : phone.strip(),
-            'pwd' : "GiaMinh123",
-            'phonetype': "0",
-            'language': 'vi'
-        }
+with open(json_path, 'r') as file:
+    data = json.load(file)
 
-    response = requests.post('https://66clubapiapi.com/api/webapi/UserLogin', data=param)
-    response = response.json()
-    try:
-        sign = response['data']['Sign']
-        uid = response['data']['UserId']
-        data[number]['uid'] = uid
-        data[number]['sign'] = sign
-    except:
-        print(phone.strip() + ": " + response['msg'])
-formatted_json = json.dumps(data, indent=4, sort_keys=False)
-with open('data/key.json', 'w') as file:
-    file.write(formatted_json)
+random_values = re.findall(r'"random":"(.*?)"', auth)
+signature_values = re.findall(r'"signature":"(.*?)"', auth)
+
+for rand, sign, number in zip(random_values, signature_values, data):
+    data[number]["login"]["random"] = rand
+    data[number]["login"]["sign"] = sign
+    formatted_json = json.dumps(data, indent=4, sort_keys=False)
+    with open(json_path, 'w') as file:
+        file.write(formatted_json)
