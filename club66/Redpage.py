@@ -63,8 +63,8 @@ def RunCode(rand, sign, number, giftcode, data):
     response = GetRedpage(giftcode, rand, sign, token)
     print(number + ":" + response['msg'])
 
-def vn168Redpage(giftcode):
-    from vn168.Token import Token
+def clubRedpage(giftcode):
+    from club66.Token import Token
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()

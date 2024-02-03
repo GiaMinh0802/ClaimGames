@@ -44,9 +44,9 @@ def GetToken(phone, random, sign):
         "sec-fetch-site": "cross-site"
     }
     post_data = {
-        "username": phone,
+        "username": "84" + phone,
         "pwd": "GiaMinh123",
-        "logintype": "email",
+        "logintype": "mobile",
         "phonetype": -1,
         "language": 2,
         "random": random,
