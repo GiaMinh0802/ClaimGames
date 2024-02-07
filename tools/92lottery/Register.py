@@ -26,7 +26,7 @@ with open("main.js", "r") as file:
 
 js_lib = execjs.compile(js_code)
 
-listInvite = ['Qtckx364592', 'Mcv7n462062','996427','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
+listInvite = ['Qtckx364592', 'Mcv7n462062','21QCq5958','4PPxk189497','rb89R284037','UaUdr352255']
 invitecode = random.choice(listInvite)
 
 phone = sys.argv[1]
