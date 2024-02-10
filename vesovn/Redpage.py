@@ -125,7 +125,7 @@ def vesovnRedpage(giftcode):
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        if (int(number) in range(1,21)):
+        if (int(number) in [1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20]):
             continue
         token = data[number]['token']
         try:
@@ -174,8 +174,8 @@ def main():
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        # if (int(number) in []):
-        #     continue
+        if (int(number) in [1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20]):
+            continue
         token = data[number]['token']
         try:
             decoded_token = jwt.decode(token, verify=False)
