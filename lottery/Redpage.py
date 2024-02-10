@@ -114,6 +114,8 @@ def lotteryRedpage(giftcode):
         data = json.load(file)
 
     for rand, sign, number in zip(random_values, signature_values, data):
+        if (int(number) in [186,215]):
+            continue
         thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data))
         threads.append(thread)
 
