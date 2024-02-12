@@ -124,8 +124,12 @@ def vesovnRedpage(giftcode):
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
+    with open('vesovn/listWithdraw.txt', 'r') as file:
+        listWithdraw = file.readlines()
+    listWithdraw = list(map(lambda x: x.strip() , listWithdraw))
+
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        if (int(number) in [1,2,3,4,6,7,9,11,12,13,14,15,16,17,18,20,30,34]):
+        if (number in listWithdraw):
             continue
         token = data[number]['token']
         try:
@@ -173,8 +177,12 @@ def main():
     random_values = re.findall(r'"random":"(.*?)"', auth)
     signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
+    with open('vesovn/listWithdraw.txt', 'r') as file:
+        listWithdraw = file.readlines()
+    listWithdraw = list(map(lambda x: x.strip() , listWithdraw))
+
     for phone, rand, sign, number in zip(phones, random_values, signature_values, data):
-        if (int(number) in [1,2,3,4,6,7,9,11,12,13,14,15,16,17,18,20,30,34]):
+        if (number in listWithdraw):
             continue
         token = data[number]['token']
         try:
