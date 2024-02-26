@@ -68,8 +68,8 @@ def lotteryRedpage(giftcode):
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[3301] = '}'
-    json_text = json_text[:3302]
+    json_text[4401] = '}'
+    json_text = json_text[:4402]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
@@ -104,8 +104,8 @@ def lotteryRedpage(giftcode):
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[3301] = '}'
-    json_text = json_text[:3302]
+    json_text[4401] = '}'
+    json_text = json_text[:4402]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
@@ -130,8 +130,8 @@ def main():
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[3301] = '}'
-    json_text = json_text[:3302]
+    json_text[4401] = '}'
+    json_text = json_text[:4402]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
@@ -166,8 +166,8 @@ def main():
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[3301] = '}'
-    json_text = json_text[:3302]
+    json_text[4401] = '}'
+    json_text = json_text[:4402]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
