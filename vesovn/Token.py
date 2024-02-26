@@ -65,14 +65,6 @@ def RunCode(number, phone, login_random, login_sign, data, json_path):
         formatted_json = json.dumps(data, indent=4, sort_keys=False)
         with open(json_path, 'w') as file:
             file.write(formatted_json)
-
-        with open(json_path, 'r') as file:
-            json_text = file.readlines()
-        json_text[2201] = '}'
-        json_text = json_text[:2202]
-        json_correct = ''.join(json_text)
-        with open(json_path, 'w') as file:
-            file.write(json_correct)
     except Exception as e:
         print(number + ":" + str(e))
 
@@ -93,6 +85,14 @@ def Token():
     for thread in threads:
         thread.join()
 
+    with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
+
 def main():
     threads = []
 
@@ -110,5 +110,13 @@ def main():
     for thread in threads:
         thread.join()
 
+    with open(json_path, 'r') as file:
+        json_text = file.readlines()
+    json_text[2201] = '}'
+    json_text = json_text[:2202]
+    json_correct = ''.join(json_text)
+    with open(json_path, 'w') as file:
+        file.write(json_correct)
+        
 if __name__ == "__main__":
     main()
