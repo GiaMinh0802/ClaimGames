@@ -33,9 +33,9 @@ async def my_event_handler(event):
                 print('----------92LOTTERY----------')
                 lotteryRedpage(mess)
             
-            # if (chat_id in [-1001887175434, -1001958370435, -1001966552444]):
-            #     print('----------VN168----------')
-            #     vn168Redpage(mess)
+            if (chat_id in [-1001887175434, -1001958370435, -1001966552444]):
+                print('----------VN168----------')
+                vn168Redpage(mess)
                 
             if (chat_id in [-1001975632908, -1001925286709]):
                 print('----------VESOVN----------')
