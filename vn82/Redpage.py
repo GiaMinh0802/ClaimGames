@@ -147,7 +147,7 @@ def vn82Redpage(giftcode):
             print(e)
         response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
-        if response['msg'] != 'Exchange successful':
+        if response['msg'] == 'The red envelope has been received':
             break
 
 def main():
@@ -196,7 +196,7 @@ def main():
             print(e)
         response = GetRedpage(giftcode, rand, sign, token)
         print(number + ":" + response['msg'])
-        if response['msg'] != 'Exchange successful':
+        if response['msg'] == 'The red envelope has been received':
             break
 
 if __name__ == "__main__":
