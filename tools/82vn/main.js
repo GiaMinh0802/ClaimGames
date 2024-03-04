@@ -55,11 +55,11 @@ function Token(phone) {
         random: ""
     }
     data.language = 2
-    data.logintype = "email"
+    data.logintype = "mobile"
     data.phonetype = -1
     data.pwd = "GiaMinh123"
     data.random = yt()
-    data.username = phone
+    data.username = "84" + phone
 
     const i = JSON.parse(JSON.stringify(data))
         , c = Object.keys(i);
