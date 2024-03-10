@@ -75,7 +75,7 @@ voice,0,1,,,,"""
 workbook = openpyxl.load_workbook('data/autofill.xlsx')
 sheet = workbook.active
 
-for i in range(1, 401):
+for i in range(1, 501):
     cell = 'B' + str(i+1)
     formatted_text = text.format(
         lottery=lotterys[i-1].strip(),
