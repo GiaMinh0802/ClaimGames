@@ -5,8 +5,9 @@ import openpyxl
 import re
 import random
 import time
+from requests.auth import HTTPProxyAuth
 
-def SetWithdrawal(random, sign, name, accNo, email, phone, address, token):
+def SetWithdrawal(random, sign, name, accNo, email, phone, address, token, proxy, auth):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/SetWithdrawalBankCard"
     options_headers = {
@@ -22,7 +23,7 @@ def SetWithdrawal(random, sign, name, accNo, email, phone, address, token):
         "Sec-Fetch-Site": "cross-site",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
 
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/SetWithdrawalBankCard"
@@ -61,11 +62,11 @@ def SetWithdrawal(random, sign, name, accNo, email, phone, address, token):
         "timestamp": int(datetime.now().timestamp())
     }
 
-    post_response = requests.post(post_url, json=post_data, headers=post_headers).json()
+    post_response = requests.post(post_url, json=post_data, headers=post_headers, proxies=proxy, auth=auth).json()
 
     return post_response
 
-def GetToken(phone, random, sign):
+def GetToken(phone, random, sign, proxy, auth):
     # Yêu cầu OPTIONS
     options_url = "https://vn168api.com/api/webapi/Login"
     options_headers = {
@@ -81,7 +82,7 @@ def GetToken(phone, random, sign):
         "sec-fetch-site": "cross-site",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    requests.options(options_url, headers=options_headers)
+    requests.options(options_url, headers=options_headers, proxies=proxy, auth=auth)
 
     # Yêu cầu POST
     post_url = "https://vn168api.com/api/webapi/Login"
@@ -107,7 +108,7 @@ def GetToken(phone, random, sign):
         "timestamp": int(datetime.now().timestamp()),
         "username": "84" + phone
     }
-    post_response = requests.post(post_url, headers=post_headers, json=post_data).json()
+    post_response = requests.post(post_url, headers=post_headers, json=post_data, proxies=proxy, auth=auth).json()
 
     return post_response['data']['token']
 
@@ -124,11 +125,25 @@ with open('data/signature.txt', 'r') as file:
 random_values = re.findall(r'"random":"(.*?)"', auth)
 signature_values = re.findall(r'"signature":"(.*?)"', auth)
 
+with open('../proxy.txt', 'r') as file:
+    listProxy = file.readlines()
+
 sheet = wb['Sheet1']
 g_all = sheet.values
 listInfos = list(g_all)
 listInfos = listInfos[1:]
 for info, randoms, sign in zip(listInfos, random_values, signature_values):
+    proxyRaw = random.choice(listProxy).strip().split(":")
+    ip = proxyRaw[0]
+    port = proxyRaw[1]
+    user = proxyRaw[2]
+    pwd = proxyRaw[3]
+    proxy = {
+    'http': 'http://' + ip + ":" + port,
+    'https': 'http://' + ip + ":" + port
+    }
+
+    auth = HTTPProxyAuth(user, pwd)
     pre_payload = {
         "smsCode": "",
         "ifsccode": "",
@@ -145,11 +160,11 @@ for info, randoms, sign in zip(listInfos, random_values, signature_values):
         "language": 2,
     }
     try:
-        token = GetToken(info[3], randoms, sign)
+        token = GetToken(info[3], randoms, sign, proxy, auth)
     except:
         print(info[3])
         continue
     result = js_lib.call("getSignature", pre_payload)
-    response = SetWithdrawal(result[1], result[0], info[1], info[2], info[4], info[3], info[5], token)
+    response = SetWithdrawal(result[1], result[0], info[1], info[2], info[4], info[3], info[5], token, proxy, auth)
     print(response)
-    time.sleep(random.randint(10,15))
+    time.sleep(random.randint(30,60))
