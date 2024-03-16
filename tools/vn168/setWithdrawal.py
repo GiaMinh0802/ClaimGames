@@ -167,4 +167,4 @@ for info, randoms, sign in zip(listInfos, random_values, signature_values):
     result = js_lib.call("getSignature", pre_payload)
     response = SetWithdrawal(result[1], result[0], info[1], info[2], info[4], info[3], info[5], token, proxy, auth)
     print(response)
-    time.sleep(random.randint(30,60))
+    time.sleep(random.randint(180,240))

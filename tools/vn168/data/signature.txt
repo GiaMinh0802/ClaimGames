@@ -15,7 +15,6 @@
 {"language":2,"random":"4ec320504911481fa308ac38d3545a78","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84387896150","signature":"C6F0814AC275C94879944AE2A54A4781","timestamp":1710478358}
 {"language":2,"random":"946edf775f8e47cd9715c39390acf047","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84757516759","signature":"34610C3CAED0244A11021BE17047D8F9","timestamp":1710478358}
 {"language":2,"random":"717d424ae86e446e98705969af9a1228","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84886941130","signature":"713E4E5DCB290A643C1CFC3E4040EFCA","timestamp":1710478358}
-{"language":2,"random":"e0523e063dcc4bbbaeb8f7b352287f4f","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84215192023","signature":"7801A30586CDCF1568D8412D738E23DB","timestamp":1710478358}
 {"language":2,"random":"c420c0fd8b3f470586177b92eb27563e","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84645454705","signature":"7670D645A5908782CB4D1983146E0472","timestamp":1710478358}
 {"language":2,"random":"abf4b53232d342e69c9fe30b9fa6c605","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84299839522","signature":"805F8FCFD9683F7D22F3A21517E24705","timestamp":1710478358}
 {"language":2,"random":"c2138f63926d47c996b655ee9bd843c0","logintype":"mobile","phonetype":-1,"pwd":"GiaMinh123","username":"84231884830","signature":"BCC91A9D05A5C5CB7F56A917994A5DCD","timestamp":1710478358}
