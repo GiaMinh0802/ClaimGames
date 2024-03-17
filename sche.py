@@ -7,8 +7,8 @@ def job():
     print(time.strftime("%H:%M:%S"))
     lotteryToken()
     print('92LOTTERY -> DONE')
-    # vn168Token()
-    # print('VN168 -> DONE')
+    vn168Token()
+    print('VN168 -> DONE')
 
 def create_schedule():
     schedule.every().day.at("14:20").do(job)
