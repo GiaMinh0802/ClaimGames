@@ -87,8 +87,8 @@ def Token():
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[2201] = '}'
-    json_text = json_text[:2202]
+    json_text[5501] = '}'
+    json_text = json_text[:5502]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
@@ -112,8 +112,8 @@ def main():
 
     with open(json_path, 'r') as file:
         json_text = file.readlines()
-    json_text[2201] = '}'
-    json_text = json_text[:2202]
+    json_text[5501] = '}'
+    json_text = json_text[:5502]
     json_correct = ''.join(json_text)
     with open(json_path, 'w') as file:
         file.write(json_correct)
