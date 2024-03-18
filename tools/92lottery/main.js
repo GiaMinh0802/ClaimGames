@@ -86,4 +86,3 @@ function listToken() {
     }
     });
 }
-listToken()
