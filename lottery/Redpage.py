@@ -182,7 +182,7 @@ def lotteryRedpage(giftcode):
                 thread = threading.Thread(target=RunCode, args=(rand, sign, number, giftcode, data))
                 threads.append(thread)
     except Exception as e:
-            print(e)
+        print(e)
 
     for thread in threads:
         thread.start()
