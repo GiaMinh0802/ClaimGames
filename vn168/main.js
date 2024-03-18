@@ -40,7 +40,7 @@ function Redpage(giftCode) {
 
 function listRedpage(giftCode) {
     var result = "";
-    for (var index = 1; index <= 200; index++) {
+    for (var index = 1; index <= 500; index++) {
         var content = JSON.stringify(Redpage(giftCode)) + "\n";
         result = result + content;
     }
